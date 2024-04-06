@@ -52,7 +52,7 @@ exports.Registration = async (req, res) => {
                     cpassword: hashedCPassword
                 });
 
-                const msg = `<h3>Dear ${fname} ${lname}</h3><br/>Thanks for registering for an account on My Account! Before we get started, we just need to confirm that this is you. Click below to verify your email address <br/> <a href="http://localhost:3000/authe/${dataSend._id}" style="background-color:black;color:white;text-decoration:none;margin:200px;font-size:30px;">Verify Email</a>`;
+                const msg = `<h3>Dear ${fname} ${lname}</h3><br/>Thanks for registering for an account on My Account! Before we get started, we just need to confirm that this is you. Click below to verify your email address <br/> <a href="https://eatandgreat.onrender.com/authe/${dataSend._id}" style="background-color:black;color:white;text-decoration:none;margin:200px;font-size:30px;">Verify Email</a>`;
                 mailer.emailMail(email, 'Mail Verification', msg);
                 return res.status(201).json({ message: 'Successfully Registration please verify your mail...', data: dataSend });
             } catch (error) {

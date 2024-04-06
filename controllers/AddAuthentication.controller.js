@@ -127,17 +127,7 @@ exports.userProfile = async (req, res) => {
         return res.status(500).json({ message: 'Internal Server Error...' })
     }
 }
-exports.updateProfile = async (req, res) => {
-    try {
-        const { fname, lname, email, password, cpassword } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 12);
-        const hashedCPassword = await bcrypt.hash(cpassword, 12);
-        Signup.findByIdAndUpdate()
-    } catch (error) {
-        return res.status(500).json({ message: 'Internal Server Error...' })
 
-    }
-}
 exports.logoutUser = async (req, res) => {
     try {
         const token = req.body.token || req.query.token || req.headers['authorization']

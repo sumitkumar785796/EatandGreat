@@ -62,17 +62,13 @@ const Header = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-6 col-md-12">
-              <div className="abt-bg">
-                <iframe width="660" height="650" src="https://www.youtube.com/embed/0g1uOi8K0mI?si=QSdmaSnFvYu7FkXG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
+              <iframe width="500" height="500" src="https://www.youtube.com/embed/0g1uOi8K0mI?si=QSdmaSnFvYu7FkXG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
             <div className="col-lg-6 col-md-12">
               <div className="abt-text">
                 <p className="top-sub">Since Year 2024</p>
                 <h2>Eat & <span className="orange-text">Great</span></h2>
                 <p style={{ textAlign: 'justify' }}>Canteen services offer a range of nutritious meals and beverages in communal settings like workplaces or institutions. Menus are carefully planned to cater to diverse dietary needs, ensuring quality and hygiene standards are met. Customers enjoy efficient meal times with options for customization and special requests. Payments are typically made through cash, electronic methods, or vouchers, with pricing reflecting meal types and portions. Feedback mechanisms drive continuous improvement, including sustainability efforts. Overall, canteen services provide convenient, healthy dining experiences that contribute to individual well-being and productivity in various environments.</p>
-
-                <a href="about.html" className="boxed-btn mt-4">know more</a>
               </div>
             </div>
           </div>

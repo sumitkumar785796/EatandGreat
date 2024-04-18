@@ -86,9 +86,10 @@ const NavBar = () => {
                   </ul>
                 </nav>
                 <a className="mobile-show search-bar-icon" href="#">
-                  <i className="fas fa-search" />
+                  <i className="fas fa-bars" />
                 </a>
-                <div className="mobile-menu" />
+                <div className="mobile-menu" >
+                </div>
                 {/* menu end */}
               </div>
             </div>

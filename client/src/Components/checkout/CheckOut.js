@@ -5,6 +5,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import DynamicUPIPayment from "../Partitals/DynamicUPI";
 const CheckOut = () => {
   const navigate = useNavigate()
   const [cartItems, setCartItems] = useState([]);
@@ -420,6 +421,13 @@ const CheckOut = () => {
                               Cash on Delivery
                             </label>
                           </div>
+                          {/* Show QR Code for Online Payment */}
+                          <DynamicUPIPayment
+                            amount={calculateSubtotal() + calculateShipping()}
+                            upiId="6202179949@ptsbi"
+                            merchantName="Eat and Great"
+                            visible={selectedPaymentMethod === "Online"}
+                          />
                         </div>
                       </div>
                     </div>

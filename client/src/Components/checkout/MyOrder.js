@@ -1,46 +1,24 @@
-import React, { useEffect, useState } from 'react'
-import NavBar from '../Partitals/NavBar'
-import Footer from '../Partitals/Footer'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import NavBar from '../Partitals/NavBar';
+import Footer from '../Partitals/Footer';
+import axios from 'axios';
 
 const MyOrder = () => {
-    const [view, setView] = useState([])
+    const [view, setView] = useState([]);
+    const [profile, setProfile] = useState({});
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const resp = await axios.get('/order')
-                setView(resp.data.data)
+                const resp = await axios.get('/order');
+                setView(resp.data.data);
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
-        }
-        fetchData()
-    }, [])
-    const formatMonthName = (monthIndex) => {
-        const months = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ];
-        return months[monthIndex];
-    };
+        };
+        fetchData();
+    }, []);
 
-    const formatTime = (hours, minutes) => {
-        const hour = hours % 12 || 12; // Convert 24-hour format to 12-hour format
-        const period = hours < 12 ? 'AM' : 'PM'; // Determine AM/PM designation
-        return `${hour}:${String(minutes).padStart(2, '0')} ${period}`;
-    };
-
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const day = String(date.getDate()).padStart(2, '0');
-        const monthIndex = date.getMonth();
-        const year = date.getFullYear();
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
-        return `${day} ${formatMonthName(monthIndex)} ${year} at ${formatTime(hours, minutes)}`;
-    };
-    // Profile
-    const [profile, setProfile] = useState({});
     useEffect(() => {
         const fetchProfile = async () => {
             try {
@@ -63,6 +41,42 @@ const MyOrder = () => {
         fetchProfile();
     }, []);
 
+    const formatMonthName = (monthIndex) => {
+        const months = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        return months[monthIndex];
+    };
+
+    const formatTime = (hours, minutes) => {
+        const hour = hours % 12 || 12;
+        const period = hours < 12 ? 'AM' : 'PM';
+        return `${hour}:${String(minutes).padStart(2, '0')} ${period}`;
+    };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const monthIndex = date.getMonth();
+        const year = date.getFullYear();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        return `${day} ${formatMonthName(monthIndex)} ${year} at ${formatTime(hours, minutes)}`;
+    };
+
+    if (!profile._id) {
+        return (
+            <>
+                <NavBar />
+                <div className="container text-center" style={{ padding: '50px' }}>
+                    <h3>Loading your orders...</h3>
+                </div>
+                <Footer />
+            </>
+        );
+    }
+
     return (
         <>
             <NavBar />
@@ -72,68 +86,75 @@ const MyOrder = () => {
                     <div className="row">
                         <div className="col-lg-8 offset-lg-2 text-center">
                             <div className="breadcrumb-text">
-                                <h1>My Order</h1>
+                                <h1>My Orders</h1>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             {/* end breadcrumb section */}
-            <div className="container">
+            <div className="container my-5">
                 <div className="row">
                     {
                         view
-                            .filter((ele) => ele.userId._id ===profile._id )
+                            .filter((ele) => ele.userId?._id === profile._id)
                             .map((ele, index) => (
+                                <div className="col-sm-12 mb-5" key={index}>
+                                    <div className="card p-4 shadow-sm">
+                                        <h5>Customer Name: {ele.addressId?.fname}</h5>
+                                        <h6>User ID: {ele.userId?._id}</h6>
 
-                                <div className="col-sm-12" key={index}>
-                                    <h5>{ele.addressId.fname}</h5>
-                                    <h5>{ele.userId._id}</h5>
+                                        <h4 className="mt-3">Order List</h4>
+                                        <h6>Order Date: {formatDate(ele.createdAt)}</h6>
 
-                                    <h4>Order List</h4>
-                                    <h6>{formatDate(ele.createdAt)}</h6>
-                                    <h5>
-                                        <div className="row" >
-                                            {ele.itemDetails.map((item, index) => (
-                                                <div className="col-sm-4" key={index}>
-                                                    <img src={item.image} alt={item.itemname} style={{ width: '20vw', height: '30vh' }} />
-                                                    <br />
-                                                    <br />
-                                                    <h4>Order Number</h4>
-                                                    <h6>{ele._id}</h6>
-                                                    <h3>{item.itemname}</h3>
-                                                    <h4>&#8377;{item.price}</h4>
-                                                    <h4>Quantity:{
-                                                        item.quantity ? (item.quantity) : (<span>1</span>)
-                                                    }</h4>
+                                        <div className="row mt-4">
+                                            {ele.itemDetails.map((item, idx) => (
+                                                <div className="col-sm-4 mb-4" key={idx}>
+                                                    <img
+                                                        src={item.image}
+                                                        alt={item.itemname}
+                                                        style={{ width: '100%', height: '30vh', objectFit: 'cover' }}
+                                                    />
+                                                    <div className="mt-2">
+                                                        <h6>Order Number: {ele._id}</h6>
+                                                        <h5>{item.itemname}</h5>
+                                                        <h6>Price: ₹{item.price}</h6>
+                                                        <h6>Quantity: {item.quantity ?? 1}</h6>
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
-                                    </h5>
-                                    <h4>Total Price &#8377;{ele.totalPayment}</h4>
-                                    <h4>
-                                        {ele.paymentMethod === "Cash on Delivery" ?
-                                            <h4 className='btn btn-danger'>Cash on Delivery</h4> :
-                                            <h4 className='btn btn-success'>Online</h4>}
-                                    </h4>
-                                    <h4>
-                                        Status {ele.status === "0" ? (
-                                            <h4 style={{ color: 'red' }}>Pending</h4>
-                                        ) : ele.status === "1" ? (
-                                            <h4 style={{ color: 'blue' }}>Processing</h4>
-                                        ) : (
-                                            <h4 style={{ color: 'green' }}>Delivered</h4>
-                                        )}
-                                    </h4>
+
+                                        <h4 className="mt-3">Total Price: ₹{ele.totalPayment}</h4>
+
+                                        <div className="mt-2">
+                                            Payment Method:
+                                            {ele.paymentMethod === "Cash on Delivery" ? (
+                                                <span className="btn btn-danger ms-2">Cash on Delivery</span>
+                                            ) : (
+                                                <span className="btn btn-success ms-2">Online</span>
+                                            )}
+                                        </div>
+
+                                        <div className="mt-2">
+                                            Status:
+                                            {ele.status === "0" ? (
+                                                <span style={{ color: 'red', marginLeft: '10px' }}>Pending</span>
+                                            ) : ele.status === "1" ? (
+                                                <span style={{ color: 'blue', marginLeft: '10px' }}>Processing</span>
+                                            ) : (
+                                                <span style={{ color: 'green', marginLeft: '10px' }}>Delivered</span>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
                             ))
                     }
-
                 </div>
             </div>
             <Footer />
         </>
-    )
+    );
 }
 
-export default MyOrder
+export default MyOrder;

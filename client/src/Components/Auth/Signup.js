@@ -83,7 +83,7 @@ const Signup = () => {
       {/* single product */}
       <div className="single-product mt-150 mb-150">
       <ToastContainer position="top-right" />
-        <div className="container" style={bg}>
+        <div className="container">
           <div className="row justify-content-center">
             <div className="col-sm-6">
               <label htmlFor="fname">First Name</label>
@@ -173,6 +173,8 @@ const Signup = () => {
           </div>
         </div>
       </div>
+      <br />
+      <br />
       {/* end single product */}
     </>
   );

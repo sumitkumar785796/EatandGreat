@@ -88,7 +88,7 @@ const Signin = () => {
       {/* single product */}
       <div className="single-product mt-150 mb-150">
         <ToastContainer position="top-right" />
-        <div className="container" style={bg}>
+        <div className="container">
           <div className="row justify-content-center">
             <div className="col-sm-6">
               <label htmlFor="email">Email</label>
@@ -129,6 +129,8 @@ const Signin = () => {
           </div>
         </div>
       </div>
+      <br />
+      <br />
       {/* end single product */}
     </>
   );
